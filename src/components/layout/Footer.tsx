@@ -48,11 +48,55 @@ export function Footer() {
             <h3 className="font-semibold text-sm uppercase tracking-wider mb-4">
               For Contractors
             </h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Electricians</li>
-              <li>Plumbers</li>
-              <li>HVAC Technicians</li>
-              <li>General Contractors</li>
+            <ul className="space-y-2">
+              <li>
+                <Link 
+                  href="/electrician" 
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Electricians
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/plumber" 
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Plumbers
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/hvac" 
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  HVAC Technicians
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/painter" 
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Painters
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/roofer" 
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Roofers
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/general-contractor" 
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  General Contractors
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
