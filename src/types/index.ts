@@ -22,6 +22,7 @@ export interface ScopeInput {
 
   // Notes
   specialNotes: string
+  exclusions: string  // User-specified exclusions, one per line
 
   // Output controls
   scopeLength: 'brief' | 'standard' | 'detailed'

@@ -1,5 +1,4 @@
-import { ScopeInput, ScopeOutput, Tone, ScopeLength } from '@/types'
-import { findTradeByInput } from './trades'
+import { ScopeInput, ScopeOutput, Tone } from '@/types'
 
 // Tone-specific templates
 const toneTemplates = {
@@ -29,34 +28,15 @@ const toneTemplates = {
   },
 }
 
-// Exclusion count by length
-const exclusionCounts: Record<ScopeLength, number> = {
-  brief: 3,
-  standard: 5,
-  detailed: 7,
-}
-
-// Base exclusions that apply to most jobs
-const baseExclusions = [
-  'Structural modifications or repairs',
-  'Relocation of existing systems or utilities',
-  'Drywall repair or painting unless specifically included',
-  'Flooring work unless specifically included',
-  'Concealed or unforeseen conditions',
-  'Permit fees unless specifically included',
-  'Work not explicitly listed in this scope',
-  'Hazardous material abatement (asbestos, lead, mold)',
-]
 
 export function generateScope(input: ScopeInput): ScopeOutput {
   const tone = toneTemplates[input.tone]
-  const trade = findTradeByInput(input.trade || input.jobTitle)
 
   // Build sections
   const projectOverview = buildProjectOverview(input, tone)
   const scopeOfWork = buildScopeOfWork(input)
   const materialsResponsibilities = buildMaterials(input, tone)
-  const exclusions = buildExclusions(input, trade)
+  const exclusions = buildExclusions(input)
   const changesClause = tone.changeOrder
 
   // Build plain text version
@@ -233,35 +213,28 @@ function buildMaterials(
   return text
 }
 
-function buildExclusions(
-  input: ScopeInput,
-  trade: ReturnType<typeof findTradeByInput>
-): string[] {
+function buildExclusions(input: ScopeInput): string[] {
   const exclusions: string[] = []
-  const targetCount = exclusionCounts[input.scopeLength]
 
-  // Add base exclusions
-  exclusions.push(...baseExclusions.slice(0, targetCount - 2))
-
-  // Add trade-specific exclusions
-  if (trade) {
-    const tradeExclusions = trade.commonExclusions.slice(0, 3)
-    tradeExclusions.forEach(ex => {
-      if (!exclusions.some(e => e.toLowerCase().includes(ex.toLowerCase()))) {
-        exclusions.push(ex)
-      }
-    })
+  // Parse user-provided exclusions (one per line)
+  if (input.exclusions && input.exclusions.trim()) {
+    const userExclusions = input.exclusions
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line.length > 0)
+    
+    exclusions.push(...userExclusions)
   }
 
-  // If patch/paint not included, make sure it's excluded
-  if (!input.includePatchPaint) {
-    const paintExclusion = 'Drywall repair or painting unless specifically included'
-    if (!exclusions.includes(paintExclusion)) {
-      exclusions.push(paintExclusion)
-    }
+  // Add standard exclusion for unforeseen conditions if not already mentioned
+  const hasUnforeseen = exclusions.some(e => 
+    e.toLowerCase().includes('unforeseen') || e.toLowerCase().includes('concealed')
+  )
+  if (!hasUnforeseen) {
+    exclusions.push('Unforeseen conditions discovered during work')
   }
 
-  return exclusions.slice(0, targetCount)
+  return exclusions
 }
 
 function buildPlainText(output: Omit<ScopeOutput, 'plainText'>): string {

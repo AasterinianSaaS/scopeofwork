@@ -22,6 +22,7 @@ const defaultFormData: ScopeInput = {
   includeDisposal: true,
   includePatchPaint: false,
   specialNotes: '',
+  exclusions: '',
   scopeLength: 'standard',
   tone: 'standard',
 }

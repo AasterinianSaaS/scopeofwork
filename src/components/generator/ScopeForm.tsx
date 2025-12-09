@@ -138,7 +138,7 @@ Test for leaks and proper operation"
         </div>
       </div>
 
-      {/* Notes */}
+      {/* Notes & Exclusions */}
       <div className="space-y-4">
         <Textarea
           label="Special Notes / Additional Details"
@@ -146,6 +146,17 @@ Test for leaks and proper operation"
           value={data.specialNotes}
           onChange={(e) => updateField('specialNotes', e.target.value)}
           rows={3}
+        />
+        <Textarea
+          label="Exclusions / Not Included (one per line)"
+          placeholder="Enter what's NOT included, e.g.:
+Tree removal over 6 inches diameter
+Stump grinding
+Irrigation system repairs
+Fence repairs"
+          value={data.exclusions}
+          onChange={(e) => updateField('exclusions', e.target.value)}
+          rows={4}
         />
       </div>
 
