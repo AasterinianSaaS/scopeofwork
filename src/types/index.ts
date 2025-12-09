@@ -15,14 +15,10 @@ export interface ScopeInput {
   // Responsibilities
   materialsResponsibility: 'contractor' | 'customer' | 'mixed'
 
-  // Inclusions (checkboxes)
-  includePermits: boolean
-  includeDisposal: boolean
-  includePatchPaint: boolean
-
-  // Notes
+  // User-specified content
+  inclusions: string   // Also included items, one per line
+  exclusions: string   // Not included items, one per line
   specialNotes: string
-  exclusions: string  // User-specified exclusions, one per line
 
   // Output controls
   scopeLength: 'brief' | 'standard' | 'detailed'

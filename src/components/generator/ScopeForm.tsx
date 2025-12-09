@@ -4,7 +4,6 @@ import { ScopeInput } from '@/types'
 import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
-import { Checkbox } from '@/components/ui/Checkbox'
 import { RadioGroup, RadioOption } from '@/components/ui/RadioGroup'
 import { Button } from '@/components/ui/Button'
 import { TradeAutocomplete } from './TradeAutocomplete'
@@ -26,7 +25,7 @@ export function ScopeForm({ data, onChange, onGenerate, isGenerating }: ScopeFor
       onSubmit={(e) => { e.preventDefault(); onGenerate(); }}
       className="space-y-8"
     >
-      {/* Optional Header Fields */}
+      {/* Document Info */}
       <div className="space-y-4">
         <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
           Document Info (Optional)
@@ -59,55 +58,70 @@ export function ScopeForm({ data, onChange, onGenerate, isGenerating }: ScopeFor
         </div>
       </div>
 
-      {/* Core Job Details */}
+      {/* Job Details */}
       <div className="space-y-4">
         <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
           Job Details
         </h3>
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TradeAutocomplete
             value={data.trade}
             onChange={(value) => updateField('trade', value)}
           />
           <Input
-            label="Job Title / Description"
-            placeholder="e.g., Replace 50-gallon gas water heater"
+            label="Job Title"
+            placeholder="e.g., Water heater replacement"
             value={data.jobTitle}
             onChange={(e) => updateField('jobTitle', e.target.value)}
             required
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              label="Location / Area"
-              placeholder="e.g., Garage, Main bathroom"
-              value={data.jobLocation}
-              onChange={(e) => updateField('jobLocation', e.target.value)}
-            />
-            <Input
-              label="Key Quantities"
-              placeholder="e.g., 2 fixtures, 3 outlets, 3 acres"
-              value={data.quantities}
-              onChange={(e) => updateField('quantities', e.target.value)}
-            />
-          </div>
-          <Textarea
-            label="Work Items (one per line)"
-            placeholder="Enter each task on a new line, e.g.:
-Remove existing water heater
-Install new 50-gallon gas water heater
-Connect to existing gas and water lines
-Test for leaks and proper operation"
-            value={data.workItems}
-            onChange={(e) => updateField('workItems', e.target.value)}
-            rows={5}
+          <Input
+            label="Location / Area"
+            placeholder="e.g., Garage, Back yard"
+            value={data.jobLocation}
+            onChange={(e) => updateField('jobLocation', e.target.value)}
+          />
+          <Input
+            label="Key Quantities"
+            placeholder="e.g., 2 fixtures, 3 acres"
+            value={data.quantities}
+            onChange={(e) => updateField('quantities', e.target.value)}
           />
         </div>
       </div>
 
-      {/* Responsibilities */}
+      {/* Work Items */}
       <div className="space-y-4">
         <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-          Materials & Inclusions
+          Scope of Work
+        </h3>
+        <Textarea
+          label="Work Items (one per line)"
+          placeholder="List each task on its own line"
+          value={data.workItems}
+          onChange={(e) => updateField('workItems', e.target.value)}
+          rows={5}
+        />
+        <Textarea
+          label="Also Included (one per line)"
+          placeholder="e.g., Debris removal, Final cleanup, Haul-away"
+          value={data.inclusions}
+          onChange={(e) => updateField('inclusions', e.target.value)}
+          rows={3}
+        />
+        <Textarea
+          label="Not Included / Exclusions (one per line)"
+          placeholder="e.g., Permits, Structural work, Repairs to existing damage"
+          value={data.exclusions}
+          onChange={(e) => updateField('exclusions', e.target.value)}
+          rows={3}
+        />
+      </div>
+
+      {/* Materials & Notes */}
+      <div className="space-y-4">
+        <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+          Materials & Notes
         </h3>
         <Select
           label="Materials Responsibility"
@@ -116,47 +130,15 @@ Test for leaks and proper operation"
           options={[
             { value: 'contractor', label: 'Contractor provides all materials' },
             { value: 'customer', label: 'Customer provides materials' },
-            { value: 'mixed', label: 'Mixed / Specify in notes' },
+            { value: 'mixed', label: 'Mixed (specify in notes)' },
           ]}
         />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Checkbox
-            label="Permits included"
-            checked={data.includePermits}
-            onChange={(e) => updateField('includePermits', e.target.checked)}
-          />
-          <Checkbox
-            label="Disposal / Haul-away"
-            checked={data.includeDisposal}
-            onChange={(e) => updateField('includeDisposal', e.target.checked)}
-          />
-          <Checkbox
-            label="Patch & Paint"
-            checked={data.includePatchPaint}
-            onChange={(e) => updateField('includePatchPaint', e.target.checked)}
-          />
-        </div>
-      </div>
-
-      {/* Notes & Exclusions */}
-      <div className="space-y-4">
         <Textarea
-          label="Special Notes / Additional Details"
-          placeholder="Any specific requirements, access notes, or additional information..."
+          label="Special Notes"
+          placeholder="Access instructions, scheduling notes, special requirements..."
           value={data.specialNotes}
           onChange={(e) => updateField('specialNotes', e.target.value)}
-          rows={3}
-        />
-        <Textarea
-          label="Exclusions / Not Included (one per line)"
-          placeholder="Enter what's NOT included, e.g.:
-Tree removal over 6 inches diameter
-Stump grinding
-Irrigation system repairs
-Fence repairs"
-          value={data.exclusions}
-          onChange={(e) => updateField('exclusions', e.target.value)}
-          rows={4}
+          rows={2}
         />
       </div>
 
@@ -201,4 +183,3 @@ Fence repairs"
     </form>
   )
 }
-

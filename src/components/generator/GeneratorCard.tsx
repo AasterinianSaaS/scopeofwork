@@ -18,11 +18,9 @@ const defaultFormData: ScopeInput = {
   quantities: '',
   workItems: '',
   materialsResponsibility: 'contractor',
-  includePermits: false,
-  includeDisposal: true,
-  includePatchPaint: false,
-  specialNotes: '',
+  inclusions: '',
   exclusions: '',
+  specialNotes: '',
   scopeLength: 'standard',
   tone: 'standard',
 }

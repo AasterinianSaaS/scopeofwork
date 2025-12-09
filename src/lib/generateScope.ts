@@ -81,9 +81,7 @@ function buildProjectOverview(
   return tone.projectOverview(input.jobTitle, input.jobLocation || undefined)
 }
 
-function buildScopeOfWork(
-  input: ScopeInput
-): string[] {
+function buildScopeOfWork(input: ScopeInput): string[] {
   const tasks: string[] = []
 
   // Parse user-provided work items (one per line)
@@ -99,37 +97,21 @@ function buildScopeOfWork(
     })
   }
 
-  // Add quantity info if provided and not already in tasks
+  // Add quantity info if provided
   if (input.quantities && input.quantities.trim()) {
     tasks.push(`Work includes: ${input.quantities}`)
   }
 
-  // Add inclusion-based tasks
-  if (input.includePermits) {
-    const permitTask = input.tone === 'professional'
-      ? 'Obtain all required permits and coordinate necessary inspections with local authority having jurisdiction'
-      : input.tone === 'standard'
-        ? 'Obtain required permits and coordinate inspections'
-        : 'Get permits and schedule inspections'
-    tasks.push(permitTask)
-  }
-
-  if (input.includeDisposal) {
-    const disposalTask = input.tone === 'professional'
-      ? 'Remove and properly dispose of all debris and replaced materials from the job site'
-      : input.tone === 'standard'
-        ? 'Remove and dispose of all old materials and debris'
-        : 'Haul away old materials and clean up'
-    tasks.push(disposalTask)
-  }
-
-  if (input.includePatchPaint) {
-    const patchTask = input.tone === 'professional'
-      ? 'Patch and paint affected surfaces to match existing finish as closely as practicable'
-      : input.tone === 'standard'
-        ? 'Patch and paint affected areas to match existing'
-        : 'Patch and paint where needed'
-    tasks.push(patchTask)
+  // Parse user-provided inclusions (one per line)
+  if (input.inclusions && input.inclusions.trim()) {
+    const userInclusions = input.inclusions
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line.length > 0)
+    
+    userInclusions.forEach(item => {
+      tasks.push(formatTaskByType(item, input.tone))
+    })
   }
 
   return tasks
