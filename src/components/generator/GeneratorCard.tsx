@@ -25,18 +25,29 @@ const defaultFormData: ScopeInput = {
   tone: 'standard',
 }
 
-export function GeneratorCard() {
+interface GeneratorCardProps {
+  defaultTrade?: string
+}
+
+export function GeneratorCard({ defaultTrade }: GeneratorCardProps = {}) {
   const [formData, setFormData] = useState<ScopeInput>(defaultFormData)
   const [output, setOutput] = useState<ScopeOutputType | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
 
-  // Load saved form data on mount
+  // Load saved form data on mount, but use defaultTrade if provided
   useEffect(() => {
     const saved = loadFormData()
     if (saved) {
-      setFormData(prev => ({ ...prev, ...saved }))
+      setFormData(prev => ({ 
+        ...prev, 
+        ...saved,
+        // Override with defaultTrade if provided (for trade-specific pages)
+        trade: defaultTrade || saved.trade || ''
+      }))
+    } else if (defaultTrade) {
+      setFormData(prev => ({ ...prev, trade: defaultTrade }))
     }
-  }, [])
+  }, [defaultTrade])
 
   const handleFormChange = (newData: ScopeInput) => {
     setFormData(newData)
