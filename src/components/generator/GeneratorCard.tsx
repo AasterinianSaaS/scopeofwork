@@ -16,6 +16,7 @@ const defaultFormData: ScopeInput = {
   jobTitle: '',
   jobLocation: '',
   quantities: '',
+  workItems: '',
   materialsResponsibility: 'contractor',
   includePermits: false,
   includeDisposal: true,

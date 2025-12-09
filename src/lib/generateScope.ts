@@ -6,8 +6,6 @@ const toneTemplates = {
   simple: {
     projectOverview: (job: string, location?: string) =>
       `This covers ${job}${location ? ` in the ${location}` : ''}.`,
-    taskPrefix: '',
-    taskSuffix: '',
     materialsContractor: 'We provide all materials needed for this job.',
     materialsCustomer: 'Customer provides all materials. We provide labor only.',
     materialsMixed: 'Some materials provided by contractor, some by customer (see notes).',
@@ -16,8 +14,6 @@ const toneTemplates = {
   standard: {
     projectOverview: (job: string, location?: string) =>
       `This Scope of Work covers ${job}${location ? ` located at/in ${location}` : ''}. All work will be performed in a professional manner consistent with industry standards.`,
-    taskPrefix: '',
-    taskSuffix: '',
     materialsContractor: 'Contractor to furnish all materials unless otherwise specified.',
     materialsCustomer: 'Owner to furnish all materials. Contractor to provide labor only.',
     materialsMixed: 'Materials responsibility is split between contractor and owner as detailed in the notes section.',
@@ -26,20 +22,11 @@ const toneTemplates = {
   professional: {
     projectOverview: (job: string, location?: string) =>
       `This Scope of Work ("SOW") defines the services to be performed for ${job}${location ? `, located at/in ${location}` : ''}. All work shall be executed in a workmanlike manner consistent with prevailing industry standards and all applicable codes and regulations.`,
-    taskPrefix: 'Furnish and install ',
-    taskSuffix: ' per manufacturer specifications and applicable codes',
     materialsContractor: 'Contractor shall furnish all materials, equipment, labor, and supervision necessary to complete the work as specified herein. All materials shall be new and of good quality unless otherwise specified.',
     materialsCustomer: 'Owner shall furnish all materials specified for this project. Contractor shall provide all labor, equipment, and supervision necessary to install Owner-furnished materials.',
     materialsMixed: 'Materials responsibility is divided between Contractor and Owner as specifically detailed in the project notes. Contractor-furnished materials shall be new and of good quality.',
     changeOrder: 'Any modifications, additions, or work required due to concealed or unforeseen conditions discovered during execution shall be documented, priced, and approved as a separate Change Order prior to commencement of such additional work.',
   },
-}
-
-// Task count by length
-const taskCounts: Record<ScopeLength, number> = {
-  brief: 4,
-  standard: 7,
-  detailed: 12,
 }
 
 // Exclusion count by length
@@ -67,7 +54,7 @@ export function generateScope(input: ScopeInput): ScopeOutput {
 
   // Build sections
   const projectOverview = buildProjectOverview(input, tone)
-  const scopeOfWork = buildScopeOfWork(input, trade, tone)
+  const scopeOfWork = buildScopeOfWork(input)
   const materialsResponsibilities = buildMaterials(input, tone)
   const exclusions = buildExclusions(input, trade)
   const changesClause = tone.changeOrder
@@ -115,27 +102,25 @@ function buildProjectOverview(
 }
 
 function buildScopeOfWork(
-  input: ScopeInput,
-  trade: ReturnType<typeof findTradeByInput>,
-  tone: typeof toneTemplates.standard
+  input: ScopeInput
 ): string[] {
   const tasks: string[] = []
-  const targetCount = taskCounts[input.scopeLength]
 
-  // Add trade-specific tasks if we have a matching trade
-  if (trade) {
-    const tradeTasks = trade.commonTasks.slice(0, targetCount - 2)
-    tasks.push(...tradeTasks.map(task => formatTask(task, tone, input.tone)))
+  // Parse user-provided work items (one per line)
+  if (input.workItems && input.workItems.trim()) {
+    const userTasks = input.workItems
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line.length > 0)
+    
+    // Format each task based on tone
+    userTasks.forEach(task => {
+      tasks.push(formatTaskByType(task, input.tone))
+    })
   }
 
-  // Add job-specific task based on title
-  const mainTask = formatTask(input.jobTitle, tone, input.tone)
-  if (!tasks.some(t => t.toLowerCase().includes(input.jobTitle.toLowerCase()))) {
-    tasks.unshift(mainTask)
-  }
-
-  // Add quantity-based tasks if provided
-  if (input.quantities) {
+  // Add quantity info if provided and not already in tasks
+  if (input.quantities && input.quantities.trim()) {
     tasks.push(`Work includes: ${input.quantities}`)
   }
 
@@ -167,48 +152,60 @@ function buildScopeOfWork(
     tasks.push(patchTask)
   }
 
-  // Add standard completion tasks
-  const completionTasks = getCompletionTasks(input.tone)
-  tasks.push(...completionTasks.slice(0, Math.max(0, targetCount - tasks.length)))
-
-  return tasks.slice(0, targetCount)
+  return tasks
 }
 
-function formatTask(task: string, tone: typeof toneTemplates.standard, toneLevel: Tone): string {
-  // Don't double-format if already starts with prefix
-  if (task.toLowerCase().startsWith('furnish') || task.toLowerCase().startsWith('install')) {
-    return task
+// Smart task formatting based on task type detection
+function formatTaskByType(task: string, tone: Tone): string {
+  const lowerTask = task.toLowerCase()
+  
+  // Simple tone: return as-is with capitalized first letter
+  if (tone === 'simple') {
+    return task.charAt(0).toUpperCase() + task.slice(1)
   }
-
-  // Only apply prefix/suffix for professional tone
-  if (toneLevel === 'professional' && tone.taskPrefix) {
-    // Make sure task doesn't already have similar phrasing
-    const cleanTask = task.charAt(0).toLowerCase() + task.slice(1)
-    return `${tone.taskPrefix}${cleanTask}${tone.taskSuffix}`
+  
+  // Check if task already has professional formatting
+  if (lowerTask.startsWith('furnish') || 
+      lowerTask.startsWith('install') || 
+      lowerTask.startsWith('remove') ||
+      lowerTask.startsWith('repair') ||
+      lowerTask.startsWith('replace') ||
+      lowerTask.startsWith('connect') ||
+      lowerTask.startsWith('test') ||
+      lowerTask.startsWith('obtain') ||
+      lowerTask.startsWith('coordinate')) {
+    // Already formatted, just capitalize
+    return task.charAt(0).toUpperCase() + task.slice(1)
   }
-
-  return task
-}
-
-function getCompletionTasks(tone: Tone): string[] {
-  if (tone === 'professional') {
-    return [
-      'Test and verify all work for proper operation and code compliance',
-      'Restore work area to clean and orderly condition',
-      'Provide manufacturer warranties and documentation as applicable',
-    ]
-  } else if (tone === 'standard') {
-    return [
-      'Test all work for proper operation',
-      'Clean up work area',
-      'Provide any applicable warranties',
-    ]
-  } else {
-    return [
-      'Test everything works',
-      'Clean up when done',
-    ]
+  
+  // Standard tone: capitalize and clean up
+  if (tone === 'standard') {
+    return task.charAt(0).toUpperCase() + task.slice(1)
   }
+  
+  // Professional tone: apply smart prefixes based on task type
+  // Only apply "Furnish and install" to installation-type tasks
+  const installKeywords = ['new', 'unit', 'fixture', 'system', 'equipment', 'device', 'panel', 'heater', 'outlet', 'switch']
+  const isInstallTask = installKeywords.some(kw => lowerTask.includes(kw))
+  
+  const removeKeywords = ['remove', 'tear out', 'demo', 'demolish', 'dispose', 'haul']
+  const isRemoveTask = removeKeywords.some(kw => lowerTask.includes(kw))
+  
+  const repairKeywords = ['repair', 'fix', 'patch', 'seal', 'caulk']
+  const isRepairTask = repairKeywords.some(kw => lowerTask.includes(kw))
+  
+  const cleanTask = task.charAt(0).toLowerCase() + task.slice(1)
+  
+  if (isRemoveTask) {
+    return task.charAt(0).toUpperCase() + task.slice(1)
+  } else if (isRepairTask) {
+    return task.charAt(0).toUpperCase() + task.slice(1)
+  } else if (isInstallTask) {
+    return `Furnish and install ${cleanTask}`
+  }
+  
+  // Default: just capitalize
+  return task.charAt(0).toUpperCase() + task.slice(1)
 }
 
 function buildMaterials(

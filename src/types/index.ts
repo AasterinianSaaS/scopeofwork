@@ -10,6 +10,7 @@ export interface ScopeInput {
   jobTitle: string
   jobLocation: string
   quantities: string
+  workItems: string  // User-specified tasks, one per line
 
   // Responsibilities
   materialsResponsibility: 'contractor' | 'customer' | 'mixed'

@@ -85,11 +85,22 @@ export function ScopeForm({ data, onChange, onGenerate, isGenerating }: ScopeFor
             />
             <Input
               label="Key Quantities"
-              placeholder="e.g., 2 fixtures, 3 outlets"
+              placeholder="e.g., 2 fixtures, 3 outlets, 3 acres"
               value={data.quantities}
               onChange={(e) => updateField('quantities', e.target.value)}
             />
           </div>
+          <Textarea
+            label="Work Items (one per line)"
+            placeholder="Enter each task on a new line, e.g.:
+Remove existing water heater
+Install new 50-gallon gas water heater
+Connect to existing gas and water lines
+Test for leaks and proper operation"
+            value={data.workItems}
+            onChange={(e) => updateField('workItems', e.target.value)}
+            rows={5}
+          />
         </div>
       </div>
 
