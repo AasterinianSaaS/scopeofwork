@@ -45,7 +45,7 @@ export default function HVACPage() {
           <div className="space-y-8">
             {/* Example 1: Full System Changeout */}
             <div className="bg-muted/30 border border-border rounded-xl p-6">
-              <h3 className="font-semibold text-lg mb-4">📋 Complete HVAC System Replacement (3-Ton)</h3>
+              <h3 className="font-semibold text-lg mb-4">Complete HVAC System Replacement (3-Ton)</h3>
               <div className="prose prose-sm max-w-none text-muted-foreground">
                 <p className="font-medium text-foreground mb-3">Scope of Work:</p>
                 <ul className="space-y-2 list-disc list-inside">
@@ -73,11 +73,11 @@ export default function HVACPage() {
 
             {/* Example 2: Mini-Split Installation */}
             <div className="bg-muted/30 border border-border rounded-xl p-6">
-              <h3 className="font-semibold text-lg mb-4">📋 Ductless Mini-Split Installation (Single Zone)</h3>
+              <h3 className="font-semibold text-lg mb-4">Ductless Mini-Split Installation (Single Zone)</h3>
               <div className="prose prose-sm max-w-none text-muted-foreground">
                 <p className="font-medium text-foreground mb-3">Scope of Work:</p>
                 <ul className="space-y-2 list-disc list-inside">
-                  <li>Furnish and install 12,000 BTU ductless mini-split system (Mitsubishi/Fujitsu or equivalent)</li>
+                  <li>Furnish and install 12,000 BTU ductless mini-split system</li>
                   <li>Mount indoor wall unit at agreed location</li>
                   <li>Install outdoor condenser on ground-level pad or wall bracket</li>
                   <li>Run refrigerant lines through wall (up to 25 linear feet)</li>
@@ -99,7 +99,7 @@ export default function HVACPage() {
 
             {/* Example 3: Ductwork Replacement */}
             <div className="bg-muted/30 border border-border rounded-xl p-6">
-              <h3 className="font-semibold text-lg mb-4">📋 Attic Ductwork Replacement</h3>
+              <h3 className="font-semibold text-lg mb-4">Attic Ductwork Replacement</h3>
               <div className="prose prose-sm max-w-none text-muted-foreground">
                 <p className="font-medium text-foreground mb-3">Scope of Work:</p>
                 <ul className="space-y-2 list-disc list-inside">
@@ -109,7 +109,7 @@ export default function HVACPage() {
                   <li>Seal all connections with mastic and mechanical fasteners</li>
                   <li>Install new return air drop from hallway ceiling</li>
                   <li>Balance airflow to all rooms within 10% of design CFM</li>
-                  <li>Perform duct leakage test (target <6% leakage)</li>
+                  <li>Perform duct leakage test (target less than 6% leakage)</li>
                   <li>Clean up all debris from attic work area</li>
                 </ul>
                 <p className="font-medium text-foreground mt-4 mb-2">Exclusions:</p>
@@ -135,7 +135,7 @@ export default function HVACPage() {
           
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-background border border-border rounded-xl p-6">
-              <h3 className="font-semibold mb-4">✅ Always Include</h3>
+              <h3 className="font-semibold mb-4">Always Include</h3>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex gap-2">
                   <span className="text-green-600">•</span>
@@ -143,7 +143,7 @@ export default function HVACPage() {
                 </li>
                 <li className="flex gap-2">
                   <span className="text-green-600">•</span>
-                  <span><strong>Equipment brand:</strong> Carrier, Trane, Lennox, or "equivalent"</span>
+                  <span><strong>Equipment brand:</strong> Carrier, Trane, Lennox, or equivalent</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-green-600">•</span>
@@ -165,7 +165,7 @@ export default function HVACPage() {
             </div>
             
             <div className="bg-background border border-border rounded-xl p-6">
-              <h3 className="font-semibold mb-4">⚠️ Common Exclusions</h3>
+              <h3 className="font-semibold mb-4">Common Exclusions</h3>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex gap-2">
                   <span className="text-amber-600">•</span>
@@ -196,23 +196,23 @@ export default function HVACPage() {
           </div>
 
           <div className="mt-8 bg-background border border-border rounded-xl p-6">
-            <h3 className="font-semibold mb-4">💡 Pro Tips for HVAC Scopes</h3>
+            <h3 className="font-semibold mb-4">Pro Tips for HVAC Scopes</h3>
             <div className="grid md:grid-cols-2 gap-4 text-muted-foreground">
               <div>
                 <p className="mb-2"><strong>Include load calculation language:</strong></p>
-                <p className="text-sm">"System sized per Manual J load calculation" or "Equipment sized to match existing system capacity." This protects you from undersizing claims.</p>
+                <p className="text-sm">System sized per Manual J load calculation or Equipment sized to match existing system capacity. This protects you from undersizing claims.</p>
               </div>
               <div>
                 <p className="mb-2"><strong>Specify refrigerant line limitations:</strong></p>
-                <p className="text-sm">"Line set included up to 30 linear feet. Additional length at $X per foot." Long runs add significant cost and time.</p>
+                <p className="text-sm">Line set included up to 30 linear feet. Additional length at $X per foot. Long runs add significant cost and time.</p>
               </div>
               <div>
                 <p className="mb-2"><strong>Address old refrigerant:</strong></p>
-                <p className="text-sm">If replacing R-22 equipment: "Existing R-22 refrigerant will be recovered per EPA regulations. New system uses R-410A."</p>
+                <p className="text-sm">If replacing R-22 equipment: Existing R-22 refrigerant will be recovered per EPA regulations. New system uses R-410A.</p>
               </div>
               <div>
                 <p className="mb-2"><strong>Document warranty clearly:</strong></p>
-                <p className="text-sm">"10-year parts warranty, 1-year labor warranty from contractor. Owner must register equipment within 60 days to activate full warranty."</p>
+                <p className="text-sm">10-year parts warranty, 1-year labor warranty from contractor. Owner must register equipment within 60 days to activate full warranty.</p>
               </div>
             </div>
           </div>
@@ -233,7 +233,7 @@ export default function HVACPage() {
               </h3>
               <p className="text-muted-foreground">
                 A complete HVAC installation scope should include: equipment specifications (tonnage, efficiency ratings, 
-                brand), what's being removed, line set details, thermostat type, ductwork modifications if any, 
+                brand), what is being removed, line set details, thermostat type, ductwork modifications if any, 
                 commissioning procedures, permit responsibilities, and warranty information. Always specify what 
                 electrical and gas work is included or excluded.
               </p>
@@ -245,9 +245,9 @@ export default function HVACPage() {
               </h3>
               <p className="text-muted-foreground">
                 Not automatically—this must be explicitly stated. Many changeouts reuse existing ductwork. Your scope 
-                should clearly say either "utilizing existing ductwork" or list specific duct modifications. If ductwork 
-                is in poor condition, note it: "Existing ductwork in serviceable condition. Replacement quoted separately 
-                if deterioration discovered during installation."
+                should clearly say either utilizing existing ductwork or list specific duct modifications. If ductwork 
+                is in poor condition, note it: Existing ductwork in serviceable condition. Replacement quoted separately 
+                if deterioration discovered during installation.
               </p>
             </div>
             
@@ -256,8 +256,8 @@ export default function HVACPage() {
                 Are permits and load calculations part of the HVAC scope?
               </h3>
               <p className="text-muted-foreground">
-                They should be addressed one way or another. Best practice: "Contractor to obtain mechanical permit. 
-                Equipment sized per Manual J/S calculations or to match existing system capacity." Some contractors 
+                They should be addressed one way or another. Best practice: Contractor to obtain mechanical permit. 
+                Equipment sized per Manual J/S calculations or to match existing system capacity. Some contractors 
                 include permit fees in the price; others pass them through. Either way, make it clear.
               </p>
             </div>
@@ -267,9 +267,9 @@ export default function HVACPage() {
                 How do I handle warranty language in HVAC scopes?
               </h3>
               <p className="text-muted-foreground">
-                Be specific about manufacturer warranty vs labor warranty. Example: "Equipment includes 10-year parts 
+                Be specific about manufacturer warranty vs labor warranty. Example: Equipment includes 10-year parts 
                 warranty from manufacturer (registration required within 60 days). Contractor provides 1-year labor 
-                warranty on installation. Extended labor warranties available." This prevents warranty confusion later.
+                warranty on installation. Extended labor warranties available. This prevents warranty confusion later.
               </p>
             </div>
             
@@ -278,9 +278,9 @@ export default function HVACPage() {
                 What about maintenance agreements—should those have scopes too?
               </h3>
               <p className="text-muted-foreground">
-                Absolutely. A maintenance agreement scope should list exactly what's included per visit: filter replacement, 
-                coil cleaning, refrigerant check, electrical inspection, etc. Also specify what's NOT included (repairs, 
-                refrigerant top-offs, emergency calls). Clear maintenance scopes prevent "I thought tune-ups included repairs" 
+                Absolutely. A maintenance agreement scope should list exactly what is included per visit: filter replacement, 
+                coil cleaning, refrigerant check, electrical inspection, etc. Also specify what is NOT included (repairs, 
+                refrigerant top-offs, emergency calls). Clear maintenance scopes prevent I thought tune-ups included repairs 
                 conversations.
               </p>
             </div>
@@ -298,7 +298,7 @@ export default function HVACPage() {
               href="/examples" 
               className="bg-background border border-border rounded-xl p-4 hover:border-foreground/30 transition-colors"
             >
-              <h3 className="font-semibold mb-1">Scope Examples →</h3>
+              <h3 className="font-semibold mb-1">Scope Examples</h3>
               <p className="text-sm text-muted-foreground">Browse examples across all trades</p>
             </Link>
             
@@ -306,7 +306,7 @@ export default function HVACPage() {
               href="/how-to-write-a-scope-of-work" 
               className="bg-background border border-border rounded-xl p-4 hover:border-foreground/30 transition-colors"
             >
-              <h3 className="font-semibold mb-1">Writing Guide →</h3>
+              <h3 className="font-semibold mb-1">Writing Guide</h3>
               <p className="text-sm text-muted-foreground">Learn scope of work best practices</p>
             </Link>
             
@@ -314,7 +314,7 @@ export default function HVACPage() {
               href="/electrician" 
               className="bg-background border border-border rounded-xl p-4 hover:border-foreground/30 transition-colors"
             >
-              <h3 className="font-semibold mb-1">Electrician Scopes →</h3>
+              <h3 className="font-semibold mb-1">Electrician Scopes</h3>
               <p className="text-sm text-muted-foreground">Scope generator for electricians</p>
             </Link>
           </div>
@@ -324,7 +324,7 @@ export default function HVACPage() {
               href="/plumber" 
               className="bg-background border border-border rounded-xl p-4 hover:border-foreground/30 transition-colors"
             >
-              <h3 className="font-semibold mb-1">Plumber Scopes →</h3>
+              <h3 className="font-semibold mb-1">Plumber Scopes</h3>
               <p className="text-sm text-muted-foreground">Scope generator for plumbers</p>
             </Link>
             
@@ -332,7 +332,7 @@ export default function HVACPage() {
               href="/roofer" 
               className="bg-background border border-border rounded-xl p-4 hover:border-foreground/30 transition-colors"
             >
-              <h3 className="font-semibold mb-1">Roofer Scopes →</h3>
+              <h3 className="font-semibold mb-1">Roofer Scopes</h3>
               <p className="text-sm text-muted-foreground">Scope generator for roofers</p>
             </Link>
             
@@ -340,7 +340,7 @@ export default function HVACPage() {
               href="/painter" 
               className="bg-background border border-border rounded-xl p-4 hover:border-foreground/30 transition-colors"
             >
-              <h3 className="font-semibold mb-1">Painter Scopes →</h3>
+              <h3 className="font-semibold mb-1">Painter Scopes</h3>
               <p className="text-sm text-muted-foreground">Scope generator for painters</p>
             </Link>
           </div>
