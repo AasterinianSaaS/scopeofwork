@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="font-sans min-h-screen flex flex-col">
-        <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
+        <GoogleAnalytics measurementId="G-G9LYRMD60T" />
         <Header />
         <main className="flex-1">
           {children}
